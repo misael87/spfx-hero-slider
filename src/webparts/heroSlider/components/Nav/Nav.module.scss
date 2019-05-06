@@ -1,0 +1,44 @@
+@import '../../styles/variables.module';
+
+.nav {
+  z-index: 10;
+  position: absolute;
+  bottom: 0;
+  height: 3rem;
+  width: 100%;
+  display: flex;
+
+  .navItem {
+    flex: auto;
+    cursor: pointer;
+    font-size: 0.6rem;
+    border: 0;
+    border-top-width: 3px;
+    border-top-style: solid;
+    border-top-color: $primaryColor;
+    background: $blackTranslucent;
+    color: #FFFFFF;
+
+    &:before {
+      content: '○ ';
+    }
+
+    &:hover {
+      color: #000000;
+      border-top-color: $secondaryColor;
+      background: $whiteTranslucent;
+
+      &:before {
+        content: '◉ ';
+      }
+    }
+
+    &.active {
+      border-top-color: #FFFFFF;
+
+      &:before {
+        content: '● ';
+      }
+    }
+  }
+}
