@@ -1,18 +1,17 @@
 import * as React from 'react';
 import styles from './Slide.module.scss';
-import ISlideProps from './ISlideProps';
+import SlideProps from './SlideProps';
 import { truncateString } from '../../../../utils';
 
-const Slide: React.StatelessComponent<ISlideProps> = ({
+const Slide: React.StatelessComponent<SlideProps> = ({
   title,
   description,
-  category,
-  ctaText,
-  ctaUrl,
+  categories,
+  ctaButton,
   imageUrl,
-  active,
+  isActive,
 }) => {
-  if (!active) return null;
+  if (!isActive) return null;
 
   const backgroundStyles = {
     backgroundImage: `url(${imageUrl})`,
@@ -21,14 +20,22 @@ const Slide: React.StatelessComponent<ISlideProps> = ({
     backgroundPosition: '50% 50%',
   };
 
+  const renderCategories = () => {
+    if (!categories) return null;
+
+    return categories.split(', ').map(category => {
+      return <span className={styles.category}>{category}</span>;
+    });
+  };
+
   return (
     <section className={styles.slide} style={backgroundStyles}>
       <div className={styles.headline}>
-        <span className={styles.category}>{category}</span>
+        {renderCategories()}
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.description}>{truncateString(description)}</p>
-        <a className={styles.cta} href={ctaUrl}>
-          {ctaText}
+        <a className={styles.cta} href={ctaButton.url}>
+          {ctaButton.text}
         </a>
       </div>
     </section>

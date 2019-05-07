@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styles from './Controls.module.scss';
-import { IControlsProps } from './IControlsProps';
+import { ControlsProps } from './ControlsProps';
 
-const Controls: React.StatelessComponent<IControlsProps> = ({
+const Controls: React.StatelessComponent<ControlsProps> = ({
   goPrevious,
   goNext,
 }) => {

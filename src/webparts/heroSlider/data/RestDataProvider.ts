@@ -1,15 +1,15 @@
-import { IDataProvider } from './IDataProvider';
-import ISlideProps from '../components/Slide/ISlideProps';
+import { DataProvider } from '../models/DataProvider';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
+import { Slide } from '../models/Slide';
 
-export class SPRestDataProvider implements IDataProvider {
+export class RestDataProvider implements DataProvider {
   private WPContext: WebPartContext;
   constructor(context) {
     this.WPContext = context;
   }
 
-  public getSlides(): Promise<ISlideProps[]> {
+  public getSlides(): Promise<Slide[]> {
     //FIXME: fix below code
     return this.WPContext.spHttpClient
       .get(
@@ -22,7 +22,9 @@ export class SPRestDataProvider implements IDataProvider {
       .then(
         (response: SPHttpClientResponse): Promise<{ value: any[] }> => {
           if (!response.ok) {
-            throw new Error('Invalid query, please contact your developer...');
+            throw new Error(
+              'Invalid query, please contact your silly developer...',
+            );
           }
 
           return response.json();
@@ -30,25 +32,20 @@ export class SPRestDataProvider implements IDataProvider {
       )
       .then((response: { value: any[] }) => {
         return response.value.map(
-          ({
-            Id,
-            OData__Category,
-            BannerImageUrl,
-            RoutingRuleDescription,
-            Title,
-            DetailLink,
-          }) => {
+          ({ Id, Categories, BannerImageUrl, Description, Title, URL }) => {
             return {
               id: Id,
-              category: OData__Category,
               title: Title,
-              description: RoutingRuleDescription, //FIXME: get default description field
-              ctaText: DetailLink ? DetailLink.Description : 'Learn more..',
-              ctaUrl: DetailLink
-                ? DetailLink.Url
-                : `${
-                    this.WPContext.pageContext.web.absoluteUrl
-                  }/site pages/${Title}.aspx`,
+              description: Description,
+              categories: Categories,
+              ctaButton: {
+                text: URL ? URL.Description : 'Learn more..',
+                url: URL
+                  ? URL.Url
+                  : `${
+                      this.WPContext.pageContext.web.absoluteUrl
+                    }/sitepages/${Title}.aspx`,
+              },
               imageUrl: `${BannerImageUrl.Url}&resolution=3`, // resolution=3 for 1024px size thumbnail
             };
           },
@@ -60,4 +57,4 @@ export class SPRestDataProvider implements IDataProvider {
   }
 }
 
-export default SPRestDataProvider;
+export default RestDataProvider;

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { INavProps } from './INavProps';
+import { NavProps } from './NavProps';
 import styles from './Nav.module.scss';
 
-const Nav: React.StatelessComponent<INavProps> = ({
+const Nav: React.StatelessComponent<NavProps> = ({
   navItems,
   onItemSelected,
   activeIndex,
@@ -19,7 +19,7 @@ const Nav: React.StatelessComponent<INavProps> = ({
           type="button"
           onClick={() => onItemSelected(index)}
         >
-          {item.title}
+          {item}
         </button>
       ))}
     </nav>

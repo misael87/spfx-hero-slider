@@ -17,25 +17,25 @@ import {
 
 import * as strings from 'HeroSliderWebPartStrings';
 import HeroSlider from './components/HeroSlider/HeroSlider';
-import { IHeroSliderProps } from './components/HeroSlider/IHeroSliderProps';
+import { HeroSliderProps } from './components/HeroSlider/HeroSliderProps';
 import MockDataProvider from './data/MockDataProvider';
-import SPRestDataProvider from './data/SPRestDataProvider';
-import { IDataProvider } from './data/IDataProvider';
+import SPRestData from './data/RestDataProvider';
+import { DataProvider } from './models/DataProvider';
 
 export default class HeroSliderWebPart extends BaseClientSideWebPart<
-  IHeroSliderProps
+  HeroSliderProps
 > {
-  private getDataProvider(): IDataProvider {
+  private getDataProvider(): DataProvider {
     if (DEBUG && Environment.type === EnvironmentType.Local) {
       return new MockDataProvider();
     }
 
-    return new SPRestDataProvider(this.context);
+    return new SPRestData(this.context);
   }
 
   public render(): void {
     const { hideControls, hideNavigation, slidesLimit } = this.properties;
-    const element: React.ReactElement<IHeroSliderProps> = React.createElement(
+    const element: React.ReactElement<HeroSliderProps> = React.createElement(
       HeroSlider,
       {
         hideControls,

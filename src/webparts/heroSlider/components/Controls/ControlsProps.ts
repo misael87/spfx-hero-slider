@@ -1,4 +1,4 @@
-export interface IControlsProps {
+export interface ControlsProps {
   goPrevious(): void;
   goNext(): void;
 }
