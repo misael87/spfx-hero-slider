@@ -5,5 +5,5 @@ export default interface ISlideProps {
   ctaText: string;
   ctaUrl: string;
   imageUrl: string;
-  active: boolean;
+  active?: boolean;
 }

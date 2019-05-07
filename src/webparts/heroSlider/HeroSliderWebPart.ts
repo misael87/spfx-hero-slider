@@ -1,13 +1,16 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
+import {
+  Version,
+  Environment,
+  EnvironmentType,
+} from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   PropertyPaneToggle,
 } from '@microsoft/sp-webpart-base';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField,
   PropertyPaneCheckbox,
   PropertyPaneSlider,
 } from '@microsoft/sp-property-pane';
@@ -15,10 +18,21 @@ import {
 import * as strings from 'HeroSliderWebPartStrings';
 import HeroSlider from './components/HeroSlider/HeroSlider';
 import { IHeroSliderProps } from './components/HeroSlider/IHeroSliderProps';
+import MockDataProvider from './data/MockDataProvider';
+import SPRestDataProvider from './data/SPRestDataProvider';
+import { IDataProvider } from './data/IDataProvider';
 
 export default class HeroSliderWebPart extends BaseClientSideWebPart<
   IHeroSliderProps
 > {
+  private getDataProvider(): IDataProvider {
+    if (DEBUG && Environment.type === EnvironmentType.Local) {
+      return new MockDataProvider();
+    }
+
+    return new SPRestDataProvider(this.context);
+  }
+
   public render(): void {
     const { hideControls, hideNavigation, slidesLimit } = this.properties;
     const element: React.ReactElement<IHeroSliderProps> = React.createElement(
@@ -27,6 +41,7 @@ export default class HeroSliderWebPart extends BaseClientSideWebPart<
         hideControls,
         hideNavigation,
         slidesLimit,
+        dataProvider: this.getDataProvider(),
       },
     );
 

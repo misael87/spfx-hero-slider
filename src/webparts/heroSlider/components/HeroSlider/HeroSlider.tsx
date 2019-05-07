@@ -5,7 +5,6 @@ import { Slide } from '../Slide';
 import { Nav } from '../Nav';
 import { Controls } from '../Controls';
 import styles from './HeroSlider.module.scss';
-import mockData from '../../data/mockData';
 
 export default class HeroSlider extends React.Component<
   IHeroSliderProps,
@@ -21,10 +20,12 @@ export default class HeroSlider extends React.Component<
   }
 
   public componentDidMount(): void {
-    const { slidesLimit } = this.props;
+    const { slidesLimit, dataProvider } = this.props;
 
-    this.setState({
-      slides: mockData.slice(0, slidesLimit),
+    dataProvider.getSlides().then(result => {
+      this.setState({
+        slides: result.slice(0, slidesLimit),
+      });
     });
   }
 
