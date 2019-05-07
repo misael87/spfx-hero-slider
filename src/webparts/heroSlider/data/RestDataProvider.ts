@@ -10,12 +10,11 @@ export class RestDataProvider implements DataProvider {
   }
 
   public getSlides(): Promise<Slide[]> {
-    //FIXME: fix below code
     return this.WPContext.spHttpClient
       .get(
         `${
           this.WPContext.pageContext.web.absoluteUrl
-        }/_api/web/lists/getbytitle('site pages')/items?$filter=ContentType eq 'Hero News Page'`,
+        }/_api/web/lists/getbytitle('site pages')/items?$filter=ContentType eq 'Hero News Page'&$expand=file&$orderby=Id desc`,
         SPHttpClient.configurations.v1,
         {},
       )
@@ -32,7 +31,15 @@ export class RestDataProvider implements DataProvider {
       )
       .then((response: { value: any[] }) => {
         return response.value.map(
-          ({ Id, Categories, BannerImageUrl, Description, Title, URL }) => {
+          ({
+            Id,
+            Categories,
+            BannerImageUrl,
+            Description,
+            Title,
+            URL,
+            File: { ServerRelativeUrl },
+          }) => {
             return {
               id: Id,
               title: Title,
@@ -42,9 +49,7 @@ export class RestDataProvider implements DataProvider {
                 text: URL ? URL.Description : 'Learn more..',
                 url: URL
                   ? URL.Url
-                  : `${
-                      this.WPContext.pageContext.web.absoluteUrl
-                    }/sitepages/${Title}.aspx`,
+                  : `${window.location.origin}${ServerRelativeUrl}`,
               },
               imageUrl: `${BannerImageUrl.Url}&resolution=3`, // resolution=3 for 1024px size thumbnail
             };

@@ -24,7 +24,11 @@ const Slide: React.StatelessComponent<SlideProps> = ({
     if (!categories) return null;
 
     return categories.split(', ').map(category => {
-      return <span className={styles.category}>{category}</span>;
+      return (
+        <span key={category} className={styles.category}>
+          {category}
+        </span>
+      );
     });
   };
 

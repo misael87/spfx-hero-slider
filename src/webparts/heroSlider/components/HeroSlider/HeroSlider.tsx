@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { HeroSliderProps } from './HeroSliderProps';
 import { HeroSliderState } from './HeroSliderState';
+import styles from './HeroSlider.module.scss';
 import { Slide } from '../Slide';
 import { Nav } from '../Nav';
 import { Controls } from '../Controls';
-import styles from './HeroSlider.module.scss';
+import { Placeholder } from '@pnp/spfx-controls-react/lib/Placeholder';
 import { ComponentStatus } from '../../models/ComponentStatus';
 
 export default class HeroSlider extends React.Component<
@@ -80,21 +81,46 @@ export default class HeroSlider extends React.Component<
     });
   };
 
+  private openConfigurationPage = () => {
+    this.props.context.propertyPane.open();
+  };
+
   public render(): React.ReactElement<HeroSliderProps> {
     const { slides, currentIndex, componentStatus } = this.state;
     const { hideControls, hideNavigation } = this.props;
 
-    // TODO: install reusable controls https://sharepoint.github.io/sp-dev-fx-controls-react/
     if (componentStatus === ComponentStatus.Error) {
-      return <div>Error</div>;
+      return (
+        <Placeholder
+          iconName="StatusErrorFull"
+          iconText="An error ocurred"
+          description="Please contact you admin"
+          hideButton
+        />
+      );
     }
 
     if (componentStatus === ComponentStatus.Loading) {
-      return <div>Loading</div>;
+      return (
+        <Placeholder
+          iconName="Sync"
+          iconText="Loading..."
+          description="Loading please wait..."
+          hideButton
+        />
+      );
     }
 
     if (componentStatus === ComponentStatus.MissingConfiguration) {
-      return <div>Missing configuration</div>;
+      return (
+        <Placeholder
+          iconName="Edit"
+          iconText="Configure your web part"
+          description="Please configure the web part."
+          buttonLabel="Configure"
+          onConfigure={this.openConfigurationPage}
+        />
+      );
     }
 
     return (

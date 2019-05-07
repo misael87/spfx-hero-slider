@@ -42,6 +42,7 @@ export default class HeroSliderWebPart extends BaseClientSideWebPart<
         hideNavigation,
         slidesLimit,
         dataProvider: this.getDataProvider(),
+        context: this.context,
       },
     );
 
