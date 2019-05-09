@@ -22,7 +22,7 @@
       "description": { "default": "Slider web part to display web site news" },
       "officeFabricIconFontName": "PhotoCollection",
       "properties": {
-        "description": "Hero Slider"
+        "slidesLimit": 4
       }
     }
   ]

@@ -9,12 +9,18 @@ export class RestDataProvider implements DataProvider {
     this.WPContext = context;
   }
 
-  public getSlides(): Promise<Slide[]> {
+  public getSlides(contentTypeName: string): Promise<Slide[]> {
+    if (!contentTypeName) {
+      return Promise.reject(
+        new Error('Content type name parameter is required'),
+      );
+    }
+
     return this.WPContext.spHttpClient
       .get(
         `${
           this.WPContext.pageContext.web.absoluteUrl
-        }/_api/web/lists/getbytitle('site pages')/items?$filter=ContentType eq 'Hero News Page'&$expand=file&$orderby=Id desc`,
+        }/_api/web/lists/getbytitle('site pages')/items?$filter=ContentType eq '${contentTypeName}'&$expand=file&$orderby=Id desc`,
         SPHttpClient.configurations.v1,
         {},
       )

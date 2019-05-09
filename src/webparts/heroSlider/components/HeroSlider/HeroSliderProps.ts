@@ -5,6 +5,7 @@ export interface HeroSliderProps {
   hideControls: boolean;
   hideNavigation: boolean;
   slidesLimit: number;
+  contentTypeName: string;
   dataProvider: DataProvider;
   context: WebPartContext;
 }

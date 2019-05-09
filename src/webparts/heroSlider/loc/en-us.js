@@ -6,5 +6,7 @@ define([], function() {
     HideNavigationFieldLabel: 'Enable to hide navigation',
     LimitsGroupName: '- - - Limits - - -',
     SlidesLimitFieldLabel: 'Limit amount of slides to display',
+    ContentTypeGroupName: '- - - Content Type - - -',
+    ContentTypeNameFieldLabel: 'Content Type Name',
   };
 });

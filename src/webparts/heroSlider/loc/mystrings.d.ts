@@ -5,6 +5,8 @@ declare interface IHeroSliderWebPartStrings {
   HideNavigationFieldLabel: string;
   LimitsGroupName: string;
   SlidesLimitFieldLabel: string;
+  ContentTypeGroupName: string;
+  ContentTypeNameFieldLabel: string;
 }
 
 declare module 'HeroSliderWebPartStrings' {

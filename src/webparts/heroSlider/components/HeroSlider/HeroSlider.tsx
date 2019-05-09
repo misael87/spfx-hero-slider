@@ -23,14 +23,20 @@ export default class HeroSlider extends React.Component<
   }
 
   public componentDidMount(): void {
-    const { slidesLimit, dataProvider } = this.props;
+    const { slidesLimit, dataProvider, contentTypeName } = this.props;
+
+    if (!contentTypeName) {
+      return this.setState({
+        componentStatus: ComponentStatus.MissingConfiguration,
+      });
+    }
 
     dataProvider
-      .getSlides()
+      .getSlides(contentTypeName)
       .then(result => {
         if (result.length === 0) {
           return this.setState({
-            componentStatus: ComponentStatus.MissingConfiguration,
+            componentStatus: ComponentStatus.Error,
           });
         }
 
@@ -93,20 +99,8 @@ export default class HeroSlider extends React.Component<
       return (
         <Placeholder
           iconName="StatusErrorFull"
-          iconText="An error ocurred"
-          description="Please contact you admin"
-          hideButton
-        />
-      );
-    }
-
-    if (componentStatus === ComponentStatus.Loading) {
-      return (
-        <Placeholder
-          iconName="Sync"
-          iconText="Loading..."
-          description="Loading please wait..."
-          hideButton
+          iconText="🔥 An error ocurred! 🔥"
+          description="Hurry up! and call the hacker cat 🐱‍💻 to fix the bug 🐛"
         />
       );
     }
@@ -115,10 +109,21 @@ export default class HeroSlider extends React.Component<
       return (
         <Placeholder
           iconName="Edit"
-          iconText="Configure your web part"
-          description="Please configure the web part."
-          buttonLabel="Configure"
+          iconText="🚧 Web part not configured! 🚧"
+          description="Don't be lazy 😪... configure this web part now! 👇"
+          buttonLabel="Configure 🔨"
           onConfigure={this.openConfigurationPage}
+        />
+      );
+    }
+
+    if (componentStatus === ComponentStatus.Loading) {
+      return (
+        <Placeholder
+          iconName="Sync"
+          iconText="⏳ Loading... ⏳"
+          description="Be patient the hamster is working 🐹, we hope this works 🙏"
+          hideButton
         />
       );
     }

@@ -8,11 +8,14 @@ import {
 import {
   BaseClientSideWebPart,
   PropertyPaneToggle,
+  PropertyPaneTextField,
 } from '@microsoft/sp-webpart-base';
 import {
   IPropertyPaneConfiguration,
   PropertyPaneCheckbox,
   PropertyPaneSlider,
+  PropertyPaneHorizontalRule,
+  PropertyPaneLabel,
 } from '@microsoft/sp-property-pane';
 
 import * as strings from 'HeroSliderWebPartStrings';
@@ -34,13 +37,19 @@ export default class HeroSliderWebPart extends BaseClientSideWebPart<
   }
 
   public render(): void {
-    const { hideControls, hideNavigation, slidesLimit } = this.properties;
+    const {
+      hideControls,
+      hideNavigation,
+      slidesLimit,
+      contentTypeName,
+    } = this.properties;
     const element: React.ReactElement<HeroSliderProps> = React.createElement(
       HeroSlider,
       {
         hideControls,
         hideNavigation,
         slidesLimit,
+        contentTypeName,
         dataProvider: this.getDataProvider(),
         context: this.context,
       },
@@ -68,6 +77,7 @@ export default class HeroSliderWebPart extends BaseClientSideWebPart<
             {
               groupName: strings.VisibilityGroupName,
               groupFields: [
+                PropertyPaneHorizontalRule(),
                 PropertyPaneCheckbox('hideControls', {
                   text: strings.HideControlsFieldLabel,
                   checked: false,
@@ -83,12 +93,21 @@ export default class HeroSliderWebPart extends BaseClientSideWebPart<
             {
               groupName: strings.LimitsGroupName,
               groupFields: [
+                PropertyPaneHorizontalRule(),
                 PropertyPaneSlider('slidesLimit', {
                   label: strings.SlidesLimitFieldLabel,
                   min: 2,
                   max: 6,
-                  value: 4,
                   showValue: true,
+                }),
+              ],
+            },
+            {
+              groupName: strings.ContentTypeGroupName,
+              groupFields: [
+                PropertyPaneHorizontalRule(),
+                PropertyPaneTextField('contentTypeName', {
+                  label: strings.ContentTypeNameFieldLabel,
                 }),
               ],
             },
