@@ -43,6 +43,7 @@ export default class HeroSliderWebPart extends BaseClientSideWebPart<
       slidesLimit,
       contentTypeName,
     } = this.properties;
+
     const element: React.ReactElement<HeroSliderProps> = React.createElement(
       HeroSlider,
       {
@@ -56,6 +57,14 @@ export default class HeroSliderWebPart extends BaseClientSideWebPart<
     );
 
     ReactDom.render(element, this.domElement);
+  }
+
+  protected get disableReactivePropertyChanges(): boolean {
+    return true;
+  }
+
+  protected onAfterPropertyPaneChangesApplied(): void {
+    ReactDom.unmountComponentAtNode(this.domElement);
   }
 
   protected onDispose(): void {
