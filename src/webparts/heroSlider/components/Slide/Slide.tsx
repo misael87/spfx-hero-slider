@@ -23,13 +23,20 @@ const Slide: React.StatelessComponent<SlideProps> = ({
   const renderCategories = () => {
     if (!categories) return null;
 
-    return categories.split(', ').map(category => {
-      return (
-        <span key={category} className={styles.category}>
-          {category}
-        </span>
-      );
-    });
+    return (
+      categories
+        // convert to array
+        .split(', ')
+        // get unique values
+        .filter((value, index, self) => self.indexOf(value) === index)
+        .map(category => {
+          return (
+            <span key={category} className={styles.category}>
+              {category}
+            </span>
+          );
+        })
+    );
   };
 
   return (

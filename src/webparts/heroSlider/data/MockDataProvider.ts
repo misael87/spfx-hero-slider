@@ -9,7 +9,7 @@ export class MockDataProvider implements DataProvider {
         title: 'This is a sample news page',
         description:
           'Laborum deserunt incididunt nisi esse nostrud reprehenderit nulla nostrud consequat aliqua laboris Lorem.',
-        categories: 'Holidays',
+        categories: 'Holidays, Holidays',
         ctaButton: { text: 'Learn more about this...', url: '/Holidays' },
         imageUrl: 'https://source.unsplash.com/1600x900/?holidays',
       },

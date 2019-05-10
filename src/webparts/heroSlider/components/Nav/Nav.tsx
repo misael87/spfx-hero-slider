@@ -13,13 +13,13 @@ const Nav: React.StatelessComponent<NavProps> = ({
         <button
           className={[
             styles.navItem,
-            index === activeIndex ? [styles.active] : [],
+            index === activeIndex ? styles.active : '',
           ].join(' ')}
-          key={index}
+          key={item.id}
           type="button"
           onClick={() => onItemSelected(index)}
         >
-          {item}
+          {item.title}
         </button>
       ))}
     </nav>

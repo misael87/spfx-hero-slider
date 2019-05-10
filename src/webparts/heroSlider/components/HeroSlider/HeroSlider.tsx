@@ -2,9 +2,7 @@ import * as React from 'react';
 import { HeroSliderProps } from './HeroSliderProps';
 import { HeroSliderState } from './HeroSliderState';
 import styles from './HeroSlider.module.scss';
-import { Slide } from '../Slide';
-import { Nav } from '../Nav';
-import { Controls } from '../Controls';
+import { Slide, Nav, Controls } from '../../components';
 import { Placeholder } from '@pnp/spfx-controls-react/lib/Placeholder';
 import { ComponentStatus } from '../../models/ComponentStatus';
 
@@ -134,11 +132,11 @@ export default class HeroSlider extends React.Component<
           <Controls goNext={this.nextSlide} goPrevious={this.prevSlide} />
         )}
         {slides.map((slide, index) => (
-          <Slide key={index} isActive={currentIndex === index} {...slide} />
+          <Slide key={slide.id} isActive={currentIndex === index} {...slide} />
         ))}
         {!hideNavigation && (
           <Nav
-            navItems={slides.map(slide => slide.title)}
+            navItems={slides}
             onItemSelected={this.selectedSlide}
             activeIndex={currentIndex}
           />

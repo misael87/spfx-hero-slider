@@ -15,15 +15,13 @@ import {
   PropertyPaneCheckbox,
   PropertyPaneSlider,
   PropertyPaneHorizontalRule,
-  PropertyPaneLabel,
 } from '@microsoft/sp-property-pane';
 
 import * as strings from 'HeroSliderWebPartStrings';
-import HeroSlider from './components/HeroSlider/HeroSlider';
+import { HeroSlider } from './components';
 import { HeroSliderProps } from './components/HeroSlider/HeroSliderProps';
-import MockDataProvider from './data/MockDataProvider';
-import SPRestData from './data/RestDataProvider';
 import { DataProvider } from './models/DataProvider';
+import { MockDataProvider, RestDataProvider } from './data';
 
 export default class HeroSliderWebPart extends BaseClientSideWebPart<
   HeroSliderProps
@@ -33,7 +31,7 @@ export default class HeroSliderWebPart extends BaseClientSideWebPart<
       return new MockDataProvider();
     }
 
-    return new SPRestData(this.context);
+    return new RestDataProvider(this.context);
   }
 
   public render(): void {
