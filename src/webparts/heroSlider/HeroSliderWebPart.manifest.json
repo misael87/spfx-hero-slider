@@ -21,9 +21,7 @@
       "title": { "default": "Hero Slider" },
       "description": { "default": "Slider web part to display web site news" },
       "officeFabricIconFontName": "PhotoCollection",
-      "properties": {
-        "slidesLimit": 4
-      }
+      "properties": {}
     }
   ]
 }
